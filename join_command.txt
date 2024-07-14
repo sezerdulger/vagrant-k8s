@@ -1,0 +1,1 @@
+kubeadm join k8s-master-lb:6443 --token obm3t7.zglh8uh9zuu6fyij --discovery-token-ca-cert-hash sha256:83d61f6d1edbe87835e28a04083927663942813e2cdc262435752938e45f991c  --certificate-key ee0c16c84da9c931b7490053947dd329d5ecf964951ef2c9ebfe719034e4eb06
