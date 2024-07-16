@@ -1,0 +1,14 @@
+stream {
+        log_format upstream_time '$remote_addr - [$time_local] '
+                             'ua=$upstream_addr uct="$upstream_connect_time"';
+        upstream apiserver_read {
+             server k8s-master-1:6443;
+             #server k8s-master-2:6443;
+             #server k8s-master-3:6443;
+        }
+        server {
+            access_log /var/log/nginx/nginx-access.log upstream_time;
+            listen 6443;
+            proxy_pass apiserver_read;
+        }
+}

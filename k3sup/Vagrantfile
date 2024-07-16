@@ -83,13 +83,18 @@ Vagrant.configure("2") do |config|
 	config.vm.define "k8s-master-lb" do |node|
 		node.vm.provision "shell", inline: "echo hello from k8s-master-lb"
 		node.vm.provision "shell", inline: "echo 'k8s-master-lb' > /etc/hostname"
-		node.vm.hostname = "k8s-master-lb"
-		node.vm.provision "shell", path: "k8s-master-lb/install.sh"
+    node.vm.hostname = "k8s-master-lb"
+    node.vm.provision "shell", inline: "hostnamectl set-hostname k8s-master-lb"
+    node.vm.provision "shell", inline: "sed -i s/'PasswordAuthentication no'/'PasswordAuthentication yes'/g /etc/ssh/sshd_config"
+    node.vm.provision "shell", inline: "service ssh restart"
+		node.vm.provision "shell", inline: "echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+
+		#node.vm.provision "shell", path: "k8s-master-lb/install.sh"
 		node.vm.network "private_network", ip: "#{k8s_master_lb_ip}"
 		node.vm.boot_timeout = 600000
 		node.vm.provider :virtualbox do |vb|
 			vb.memory = 2048
-			vb.cpus = 2
+			vb.cpus = 1
 			vb.customize ["modifyvm", :id, "--vram", "256", "--paravirtprovider", "minimal"]
 		end
 	end
@@ -98,13 +103,17 @@ Vagrant.configure("2") do |config|
 	  config.vm.define "#{name}" do |node|
 		node.vm.provision "shell", inline: "echo hello from k8s master node #{name}"
 		node.vm.provision "shell", inline: "echo #{name} > /etc/hostname"
+    node.vm.provision "shell", inline: "hostnamectl set-hostname #{name}"
 		node.vm.hostname = "#{name}"
-		node.vm.provision "shell", path: "install.sh", :args => [ "#{name}", "#{ip}" ]
+    node.vm.provision "shell", inline: "sed -i s/'PasswordAuthentication no'/'PasswordAuthentication yes'/g /etc/ssh/sshd_config"
+    node.vm.provision "shell", inline: "service ssh restart"
+    node.vm.provision "shell", inline: "echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+		#node.vm.provision "shell", path: "install.sh", :args => [ "#{name}", "#{ip}" ]
 		node.vm.network "private_network", ip: "#{ip}"
 		node.vm.boot_timeout = 600000
 		node.vm.provider :virtualbox do |vb|
 			vb.memory = 2048
-			vb.cpus = 2
+			vb.cpus = 1
 			vb.customize ["modifyvm", :id, "--vram", "256", "--paravirtprovider", "minimal"]
 		end
 	  end
@@ -115,8 +124,12 @@ Vagrant.configure("2") do |config|
 	  config.vm.define "#{name}" do |node|
 		node.vm.provision "shell", inline: "echo hello from k8s ceph node #{name}"
 		node.vm.provision "shell", inline: "echo #{name} > /etc/hostname"
+    node.vm.provision "shell", inline: "hostnamectl set-hostname #{name}"
 		node.vm.hostname = "#{name}"
-		node.vm.provision "shell", path: "install.sh", :args => [ "#{name}", "#{ip}" ]
+    node.vm.provision "shell", inline: "sed -i s/'PasswordAuthentication no'/'PasswordAuthentication yes'/g /etc/ssh/sshd_config"
+    node.vm.provision "shell", inline: "service ssh restart"
+    node.vm.provision "shell", inline: "echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+		#node.vm.provision "shell", path: "install.sh", :args => [ "#{name}", "#{ip}" ]
 		node.vm.network "private_network", ip: "#{ip}"
 		node.vm.boot_timeout = 600000
 		node.vm.provider :virtualbox do |vb|
