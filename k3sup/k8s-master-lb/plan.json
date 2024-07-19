@@ -1,0 +1,26 @@
+[
+	{
+		"hostname": "k8s-master-1",
+		"ip": "192.168.2.10"
+	},
+	{
+		"hostname": "k8s-master-2",
+		"ip": "192.168.2.11"
+	},
+	{
+		"hostname": "k8s-master-2",
+		"ip": "192.168.2.12"
+	},
+	{
+		"hostname": "k8s-ceph-1",
+		"ip": "192.168.2.50"
+	},
+	{
+		"hostname": "k8s-ceph-2",
+		"ip": "192.168.2.51"
+	},
+	{
+		"hostname": "k8s-ceph-3",
+		"ip": "192.168.2.52"
+	}
+]

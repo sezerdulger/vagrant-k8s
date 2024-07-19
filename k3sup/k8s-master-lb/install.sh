@@ -6,6 +6,22 @@ hostnamectl set-hostname k8s-master-lb
 cp /vagrant/hosts.txt /etc/hosts
 sed -i s/'{HOSTNAME}'/'k8s-master-lb'/g /etc/hosts
 
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py --user
+python3 -m pip install --user ansible
+mkdir /etc/ansible
+touch /etc/ansible/hosts
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+curl -sLS https://get.k3sup.dev | sh
+
+if [ ! -f '/root/.ssh/id_rsa' ]; then ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa; fi
+apt-get update && apt-get install expect -y
+
+
+./k3s-cluster.sh
+
 service nginx status
 
 if [[ $? != 0 ]]; then

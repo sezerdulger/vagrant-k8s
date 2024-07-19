@@ -1,0 +1,9 @@
+[masters]
+192.168.2.10 ansible_connection=ssh ansible_user=vagrant
+192.168.2.11 ansible_connection=ssh ansible_user=vagrant
+192.168.2.12 ansible_connection=ssh ansible_user=vagrant
+
+[agents]
+192.168.2.50 ansible_connection=ssh ansible_user=vagrant
+192.168.2.51 ansible_connection=ssh ansible_user=vagrant
+192.168.2.52 ansible_connection=ssh ansible_user=vagrant
